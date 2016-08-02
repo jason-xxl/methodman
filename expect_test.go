@@ -10,8 +10,6 @@ import (
 	"os"
 
 	"time"
-
-	"github.com/myteksi/go/commons/util/type/methodtool"
 )
 
 var (
