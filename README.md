@@ -8,7 +8,7 @@ In many dynamic language it's easy to monkey patching object or methods. However
 ```  
 or define a reference var in caller side like (for cases you can't change code of the lib),
 ```
-  var DependencyRef = targetpkg.TargetMethod
+  var TheMethodToBeMocked = targetpkg.TargetMethod
 ```  
 Then you can monkey patch DependencyRef for mocking.
 
