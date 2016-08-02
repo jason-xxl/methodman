@@ -17,8 +17,8 @@ import (
 var (
 	MethodAInfo = "I'm original MethodA"
 
-	// So, MethodA is an exported method from some library
-	// obeying convention, it's in a form of method variable
+	// So, MethodA here represents an exported method from some library you want to mock
+	// By convention, it's in a form of method variable
 	//
 	MethodA = func(p1 int, p2 string) (r1 string) {
 		return MethodAInfo
