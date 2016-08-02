@@ -22,7 +22,7 @@ As extra features, methodman is equipped with [GoroutineLocalStorage](https://gi
 
 ### How to use
 
-1. firstly, attach a method agent to the method to be mocked
+##### Firstly, attach a method agent to the method to be mocked
 ```
 func TestMain(m *testing.M) {
 	flag.Parse()
@@ -30,7 +30,7 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 ```
-2. mock it in your test
+##### Then, mock it in your test
 ```
 func TestNormalUse(t *testing.T) {
 
