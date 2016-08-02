@@ -22,11 +22,15 @@ As extra features, methodman is equipped with [GoroutineLocalStorage](https://gi
 
 ### How to use
 
+##### Install
+```
+go get -u github.com/jason-xxl/methodman
+```
 ##### Firstly, attach a method agent to the method to be mocked
 ```
 func TestMain(m *testing.M) {
 	flag.Parse()
-	EnableMock(&dep_pkg.MethodA, "MethodA")
+	methodman.EnableMock(&dep_pkg.MethodA, "MethodA")
 	os.Exit(m.Run())
 }
 ```
@@ -34,8 +38,9 @@ func TestMain(m *testing.M) {
 ```
 func TestNormalUse(t *testing.T) {
 
-	defer RestoreMock()
-	Expect(&dep_pkg.MethodA, "some fake response as 1st returned var", "some more, as 2nd retuened var")
+	defer methodman.RestoreMock()
+	
+	methodman.Expect(&dep_pkg.MethodA, "some fake response as 1st returned var", "some more, as 2nd retuened var")
 
 	// Then you can receive above 2 value in your code path.
 	ret1, ret 2 := dep_pkg.MethodA(1, "2")
