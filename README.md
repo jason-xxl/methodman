@@ -38,6 +38,7 @@ func TestNormalUse(t *testing.T) {
 	Expect(&dep_pkg.MethodA, "some fake response for my test as 1st returned var", "some more, as 2nd retuened var")
 
 	// then you can receive above 2 value in your code path.
+	// if all fake responses are consumed, the agent will fall back to original method.
 	ret1, ret 2 := dep_pkg.MethodA(1, "2")
 }
 ```
