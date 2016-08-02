@@ -37,11 +37,11 @@ func TestNormalUse(t *testing.T) {
 	defer RestoreMock()
 	Expect(&dep_pkg.MethodA, "some fake response for my test as 1st returned var", "some more, as 2nd retuened var")
 
-  // then you can receive above 2 value in your code path.
+	// then you can receive above 2 value in your code path.
 	ret1, ret 2 := dep_pkg.MethodA(1, "2")
 }
 ```
 
-### Full Demo
+### Complete Demo
 
 Please check out [GitHub Pages](https://github.com/jason-xxl/methodman/blob/master/expect_test.go)
