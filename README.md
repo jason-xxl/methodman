@@ -2,15 +2,15 @@
 
 **methodman** is a mocking tool for Go based on monkey-patching. 
 
-In many dynamic language it's easy to monkey patching object or methods. However in Go, exported pkg method is not modifiable. So to get monkey patching work, one (and only) prerequition is define the target method in a way like this (in the case you can control the code), 
+In many dynamic language it's easy to monkey patching object or methods. However in Go, exported pkg method is not modifiable. So to get monkey patching work, one (and only) prerequition is define the target method in a way like this to allow monkey patching (in the case you can control the code), 
 ```
   var TheMethodToBeMocked = func(...){...}
 ```  
-or define a reference var in caller side like,
+or define a reference var in caller side like (for cases you can't change code of the lib),
 ```
   var DependencyRef = targetpkg.TargetMethod
 ```  
-Then you can mock on DependencyRef.
+Then you can monkey patch DependencyRef for mocking.
 
 ### Why introduce this tool?
 
