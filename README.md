@@ -20,6 +20,28 @@ I find most of dependency injection approaches in Go require significant boiletp
 
 As extra features, methodman is equipped with [GoroutineLocalStorage](https://github.com/tylerb/gls), which is used to enables parallel mocking / unittest, that mocking in one goroutine won't affect mocking in another goroutine. It also supports mocking with a temporary func, which could be useful for simulating timeout, panic, mock with internal state (via closure), or any other kind of side-effects.
 
-### Examples
+### How to use
+
+1. firstly, attach a method agent to the method to be mocked
+```
+func TestMain(m *testing.M) {
+	flag.Parse()
+	EnableMock(&dep_pkg.MethodA, "MethodA")
+	os.Exit(m.Run())
+}
+```
+2. mock it in your test
+```
+func TestNormalUse(t *testing.T) {
+
+	defer RestoreMock()
+	Expect(&dep_pkg.MethodA, "some fake response for my test as 1st returned var", "some more, as 2nd retuened var")
+
+  // then you can receive above 2 value in your code path.
+	ret1, ret 2 := dep_pkg.MethodA(1, "2")
+}
+```
+
+### Full Demo
 
 Please check out [GitHub Pages](https://github.com/jason-xxl/methodman/blob/master/expect_test.go)
