@@ -34,7 +34,7 @@ func TestMain(m *testing.M) {
 	// We firstly check the original method key, which is unique
 	// based on its method body pointer
 	//
-	methodKeyA0 := methodtool.GetMethodUniqueID(MethodA)
+	methodKeyA0 := GetMethodUniqueID(MethodA)
 
 	// By calling EnableMock, a method manager will wrap the original method and
 	// switch the method var of exported method to the method manager itself.
@@ -54,7 +54,7 @@ func TestMain(m *testing.M) {
 	// See? It's already the key of the method manager, not the
 	// original method.
 	//
-	methodKeyA1 := methodtool.GetMethodUniqueID(MethodA)
+	methodKeyA1 := GetMethodUniqueID(MethodA)
 	if methodKeyA0 == methodKeyA1 {
 		panic("EnableMock should have replaced original method")
 	}

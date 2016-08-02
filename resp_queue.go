@@ -3,7 +3,6 @@ package methodman
 import (
 	"reflect"
 
-	"github.com/myteksi/go/commons/util/type/methodtool"
 	mygls "github.com/tylerb/gls"
 )
 
@@ -67,7 +66,7 @@ func GetLocalRespQueue(fullKey string) (o RespQueue) {
 
 // ResetQueue flushed resp queue for a method under current goroutine
 func ResetQueue(method interface{}) {
-	if !methodtool.IsMethodPointer(method) {
+	if !IsMethodPointer(method) {
 		panic("methodman.MockCleanUp: method is not a method pointer.")
 	}
 	fullKey := getFullKey(method)
@@ -82,11 +81,11 @@ var (
 )
 
 func getQueueFromMethod(method interface{}) (manager *Manager, respQueue RespQueue) {
-	if !methodtool.IsMethodPointer(method) {
+	if !IsMethodPointer(method) {
 		panic("methodman.Expect: method is not a method pointer.")
 	}
 
-	methodKey := methodtool.GetMethodUniqueID(method)
+	methodKey := GetMethodUniqueID(method)
 
 	var ok bool
 	if manager, ok = managerMap[methodKey]; !ok {

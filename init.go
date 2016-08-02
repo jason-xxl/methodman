@@ -1,7 +1,5 @@
 package methodman
 
-import "github.com/myteksi/go/commons/util/type/methodtool"
-
 var (
 	// queueLength is max element number in a queue. you can change it if you really
 	// need larger queue size.
@@ -15,7 +13,7 @@ var (
 )
 
 func getFullKey(method interface{}) (fullKey string) {
-	fullKey = queueKeyPrefix + string(methodtool.GetMethodUniqueID(method))
+	fullKey = queueKeyPrefix + string(GetMethodUniqueID(method))
 	return
 }
 

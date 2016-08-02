@@ -1,10 +1,6 @@
 package methodman
 
-import (
-	"reflect"
-
-	"github.com/myteksi/go/commons/util/type/methodtool"
-)
+import "reflect"
 
 // EnableMock upgrades a method to allow per-goroutine mocking.
 // Note that,
@@ -16,12 +12,12 @@ import (
 // Mutex
 func EnableMock(method interface{}, name string) {
 
-	if !methodtool.IsMethodPointer(method) {
+	if !IsMethodPointer(method) {
 		panic("methodman.EnableMock: method is not a method pointer.")
 	}
 
 	// assuming its a manager method, check if it is
-	methodKey := methodtool.GetMethodUniqueID(method)
+	methodKey := GetMethodUniqueID(method)
 	if _, ok := managerMap[methodKey]; ok {
 		// do nothing if methodKey exists
 		return
@@ -36,7 +32,7 @@ func EnableMock(method interface{}, name string) {
 	f := manager.Method.MakeFunc()
 
 	// store the manager method
-	methodKey = methodtool.GetMethodUniqueID(f.Interface())
+	methodKey = GetMethodUniqueID(f.Interface())
 	managerMap[methodKey] = manager
 
 	// switch the pointer of original method to the manager method

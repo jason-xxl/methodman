@@ -1,17 +1,13 @@
 package methodman
 
-import (
-	"reflect"
-
-	"github.com/myteksi/go/commons/util/type/methodtool"
-)
+import "reflect"
 
 // OriginalMethod ...
 type OriginalMethod reflect.Value
 
 // OriginalMethodNew ...
 func OriginalMethodNew(method interface{}) (o *OriginalMethod, ok bool) {
-	if !methodtool.IsMethod(method) {
+	if !IsMethod(method) {
 		ok = false
 		return
 	}
