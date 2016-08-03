@@ -1,4 +1,4 @@
-package methodman
+package mm
 
 // ManagerMap stores mapping relation from pointer of manager method to its state struct.
 // Note that,

@@ -1,4 +1,4 @@
-package methodman
+package mm
 
 var (
 	// queueLength is max element number in a queue. you can change it if you really

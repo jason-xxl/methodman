@@ -1,4 +1,4 @@
-package methodman
+package mm
 
 import (
 	mygls "github.com/tylerb/gls"

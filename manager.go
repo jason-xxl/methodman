@@ -1,4 +1,4 @@
-package methodman
+package mm
 
 // Manager maintains states of a method wrapper, which will take over control of
 // your original method. The basic idea is, for each calls it will

@@ -1,4 +1,4 @@
-package methodman
+package mm
 
 // Expect adds a mocking response to a queue of given method.
 // Note that,

@@ -30,7 +30,7 @@ go get -u github.com/jason-xxl/methodman
 ```
 func TestMain(m *testing.M) {
 	flag.Parse()
-	methodman.EnableMock(&dep_pkg.MethodA, "MethodA")
+	mm.EnableMock(&dep_pkg.MethodA, "MethodA")
 	os.Exit(m.Run())
 }
 ```
@@ -38,9 +38,9 @@ func TestMain(m *testing.M) {
 ```
 func TestNormalUse(t *testing.T) {
 
-	defer methodman.RestoreMock()
+	defer mm.RestoreMock()
 	
-	methodman.Expect(&dep_pkg.MethodA, "some fake response as 1st returned var", "some more, as 2nd retuened var")
+	mm.Expect(&dep_pkg.MethodA, "some fake response as 1st returned var", "some more, as 2nd retuened var")
 
 	// Then you can receive above 2 value in your code path.
 	ret1, ret 2 := dep_pkg.MethodA(1, "2")
