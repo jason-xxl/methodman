@@ -2,7 +2,9 @@
 
 **methodman** is a Go mocking tool based on monkey-patching. 
 
-In many dynamic language it's easy to monkey patching object or methods. However in Go, exported pkg method is not modifiable. So to get monkey patching work, pkg method need to be defined as a method variable to allow monkey patching (in the case you can control the code),
+## How to enable monkey patching in Golang?
+
+In many dynamic languages it's easy to monkey patching object or methods. However, in Go, exported pkg method is not modifiable. So by default there's no formal way to monkey-patch. To get monkey patching work, pkg method need to be defined as a method variable to allow monkey patching (in the case you can control the code),
 ```
   var TheMethodToBeMocked = func(...){...}
 ```  
