@@ -59,7 +59,9 @@ func TestNormalUse(t *testing.T) {
 
 ## How to convert integration-test into unittest? (For refactoring scenarios)
 
-Assuming you have a test case that accesses external dependencies and already works fine, assuming no forking gorouting insight the logic, now, you want to convert it into unittest. So the idea here is you run your integration-test once, capture those real outputs of depending methods, and use those output as sample to mock. Here's step by step.
+Assuming you have a test case that accesses external dependencies and already works fine, assuming no forking gorouting insight the logic, now, you want to convert it into unittest. 
+
+So the idea here is you run your integration-test once, capture those real outputs of depending methods, and use those output as sample to mock. Here's step by step.
 
 ##### 1. Enable the `CapturingLogger` and register the methods that you want to mock. 
 ```
