@@ -68,3 +68,12 @@ func GetMethodType(method interface{}) (typeMethod reflect.Type) {
 
 	return
 }
+
+// ValueSliceToInterfaceSlice convert []reflect.Value to []interface{}
+func ValueSliceToInterfaceSlice(valueSlice []reflect.Value) (interfaceSlice []interface{}) {
+	interfaceSlice = make([]interface{}, len(valueSlice))
+	for i, e := range valueSlice {
+		interfaceSlice[i] = e.Interface()
+	}
+	return
+}

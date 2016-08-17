@@ -1,10 +1,6 @@
 package mm
 
-import (
-	"reflect"
-
-	mygls "github.com/tylerb/gls"
-)
+import "github.com/tylerb/gls"
 
 // RespQueue is a blocking queue storing expected / fake response for use
 type RespQueue chan []interface{}
@@ -49,11 +45,11 @@ func (o RespQueue) Flush() {
 
 // GetLocalRespQueue ...
 func GetLocalRespQueue(fullKey string) (o RespQueue) {
-	tmp := mygls.Get(fullKey)
+	tmp := gls.Get(fullKey)
 
 	if tmp == nil {
 		o = RespQueueNew(queueLength)
-		mygls.Set(fullKey, o)
+		gls.Set(fullKey, o)
 	} else {
 		var ok bool
 		o, ok = tmp.(RespQueue)
@@ -92,7 +88,7 @@ func getQueueFromMethod(method interface{}) (manager *Manager, respQueue RespQue
 		panic("methodman.Expect: " + errorInfoQueueFull)
 	}
 
-	fullKey := getFullKey(reflect.Value(*(manager.Method)).Interface())
+	fullKey := getFullKey(manager.Method.m.Interface())
 	respQueue = GetLocalRespQueue(fullKey)
 	return
 }

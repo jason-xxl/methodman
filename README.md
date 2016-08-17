@@ -38,7 +38,7 @@ func TestMain(m *testing.M) {
 ```
 func TestNormalUse(t *testing.T) {
 
-	defer mm.RestoreMock()
+	defer mm.Init(t).CleanUp()
 	
 	mm.Expect(&dep_pkg.MethodA, "some fake response as 1st returned var", "some more, as 2nd retuened var")
 
@@ -54,3 +54,21 @@ func TestNormalUse(t *testing.T) {
 ### Complete Demo
 
 Please check out [GitHub Pages](https://github.com/jason-xxl/methodman/blob/master/expect_test.go)
+
+### Converting Integration Test to Unittest
+
+Assuming you have a test case that accesses external dependencies that already works properly, and you want to convert into unittest, you can use the `CapturingLogger` with
+```
+mm.SetLogger(mm.CapturingLogger)
+```
+Then you run your test in verbose mode, you can get the real response in the form of usable code that you can insert into your code. This save human effort to form the mock response and reduce human error.
+```
+go test -v -run YourTestToConvert
+```
+You would gain output from original method in the way copy-pastable.
+```
+mm.Expect(&dep_pkg1.MethodA, "real response 1", "real response 2")
+mm.Expect(&dep_pkg2.MethodB, "real response 3")
+...
+...
+```

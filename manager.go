@@ -12,7 +12,7 @@ type Manager struct {
 
 // ManagerNew ...
 func ManagerNew(name string, method interface{}) (o *Manager) {
-	originalMethod, ok := OriginalMethodNew(method)
+	originalMethod, ok := OriginalMethodNew(name, method)
 	if !ok {
 		panic("methodman.ManagerNew: method param is not a method pointer")
 	}

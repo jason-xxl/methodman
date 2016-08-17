@@ -14,7 +14,7 @@ func ExpectFunc(method interface{}, fakeFunc interface{}) {
 	manager, respQueue := getQueueFromMethod(method)
 
 	// signature check
-	typeOriginalMethod := reflect.Value(*manager.Method).Type()
+	typeOriginalMethod := manager.Method.m.Type()
 	typeTempImpl := reflect.TypeOf(fakeFunc)
 
 	if typeOriginalMethod != typeTempImpl {

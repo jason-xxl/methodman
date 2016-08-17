@@ -9,6 +9,7 @@ package mm
 // to serve the call
 // 4) you can enqueue mock objects to its constructing function
 // 5) it panic if you gave invalid value
+//
 func Expect(method interface{}, response ...interface{}) {
 
 	_, respQueue := getQueueFromMethod(method)

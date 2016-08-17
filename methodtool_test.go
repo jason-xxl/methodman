@@ -1,8 +1,6 @@
 package mm
 
-import (
-	"testing"
-)
+import "testing"
 
 var (
 	Method1 = func(p1 int, p2 string) (r1 string) {

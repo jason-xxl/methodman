@@ -59,7 +59,16 @@ func TestMain(m *testing.M) {
 		panic("EnableMock should have replaced original method")
 	}
 
+	// (Optionally) You can set a custom logger to trace what's responsed.
+	//
+	// For cases you want to convert an existing integration to unittest, you can
+	// use a predefined CapturingLogger which would output response from original
+	// methods as usable code, in calling order. (go test -v .)
+	//
+	// SetLogger(CapturingLogger)
+
 	// ok, initiation done. We can start real unittests.
+	//
 	os.Exit(m.Run())
 }
 
@@ -68,7 +77,7 @@ func TestNormalUse(t *testing.T) {
 	// Setup cleanup as defer. It should be added to each goroutine
 	// where Expect is called. Usually as defer
 	//
-	defer RestoreMock()
+	defer Init(t).CleanUp()
 
 	// So now we can inject some fake resp into MethodA endpoint.
 	//
@@ -100,7 +109,7 @@ func TestNormalUse(t *testing.T) {
 	ExpectFunc(&MethodA, func(p1 int, p2 string) (r1 string) {
 
 		// simulate timeout
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(1 * time.Nanosecond)
 		return info3
 	})
 
@@ -131,7 +140,7 @@ func TestNormalUse(t *testing.T) {
 			// Setup cleanup as defer. It should be added to each goroutine
 			// where Expect is called. Usually as defer
 			//
-			defer RestoreMock()
+			defer Init(t).CleanUp()
 
 			info1 := "I'm method manager of MethodA " + strconv.Itoa(i)
 
