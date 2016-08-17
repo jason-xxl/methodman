@@ -80,7 +80,7 @@ func TestMain(m *testing.M) {
 ```
 go test -v -run TestToBeConverted
 ```
-You would gain output from original method in the way copy-pastable.
+In test output, you gain the output from original method in the way copy-pastable.
 ```
 ...
 mm.Expect(&dep_pkg1.MethodA, "real response 1", "real response 2")
