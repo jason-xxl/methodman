@@ -24,7 +24,7 @@ As extra features,
 
 - supports parallel unittest (assuming no side effect) by equipting [GoroutineLocalStorage](https://github.com/tylerb/gls). Mocking in one goroutine won't affect mocking in another goroutine.
 - supports mocking with a temporary func, which could be useful for simulating timeout, panic, mock with internal state (via closure), or any other kind of side-effects.
-- certain helper support to make conversion from integration-test to unit-test. See the sections below.
+- certain helper support to make conversion from integration-test to unit-test easiler. This could be useful in refactoring old code base. See the sections below.
 
 ## How to use?
 
