@@ -51,10 +51,6 @@ func TestNormalUse(t *testing.T) {
 }
 ```
 
-### Complete Demo
-
-Please check out [GitHub Pages](https://github.com/jason-xxl/methodman/blob/master/expect_test.go)
-
 ### Converting Integration Test to Unittest
 
 Assuming you have a test case that accesses external dependencies that already works properly, and you want to convert into unittest, you can use the `CapturingLogger` with
@@ -67,8 +63,13 @@ go test -v -run YourTestToConvert
 ```
 You would gain output from original method in the way copy-pastable.
 ```
+...
 mm.Expect(&dep_pkg1.MethodA, "real response 1", "real response 2")
 mm.Expect(&dep_pkg2.MethodB, "real response 3")
 ...
 ...
 ```
+
+### Complete Demo
+
+Please check out [GitHub Pages](https://github.com/jason-xxl/methodman/blob/master/expect_test.go)
