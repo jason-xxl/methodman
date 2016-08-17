@@ -53,13 +53,24 @@ func TestNormalUse(t *testing.T) {
 
 ### Converting Integration Test to Unittest
 
-Assuming you have a test case that accesses external dependencies that already works properly, and you want to convert into unittest, you can use the `CapturingLogger` with
+Assuming you have a test case that accesses external dependencies and already works find, you want to convert into unittest.
+
+1. Enable the `CapturingLogger` and register the methods that you want to mock.
 ```
-mm.SetLogger(mm.CapturingLogger)
+func TestMain(m *testing.M) {
+	flag.Parse()
+
+	mm.SetLogger(mm.CapturingLogger)
+
+	mm.EnableMock(&dep_pkg.MethodA, "dep_pkg1.MethodA")
+	mm.EnableMock(&dep_pkg.MethodB, "dep_pkg2.MethodA")
+
+	os.Exit(m.Run())
+}
 ```
-Then you run your test in verbose mode, you can get the real response in the form of usable code that you can insert into your code. This save human effort to form the mock response and reduce human error.
+2. Run your test in verbose mode, you can get the real response in the form of usable code that you can insert into your code. This save human effort to form the mock response and reduce human error.
 ```
-go test -v -run YourTestToConvert
+go test -v -run TestToBeConverted
 ```
 You would gain output from original method in the way copy-pastable.
 ```
@@ -69,6 +80,25 @@ mm.Expect(&dep_pkg2.MethodB, "real response 3")
 ...
 ...
 ```
+3. By copying them into your test, you gain the unittest version based on previous integration.
+```
+func TestToBeConverted(t *testing.T) {
+
+    defer mm.Init(t).CleanUp()
+
+    mm.Expect(&dep_pkg1.MethodA, "real response 1", "real response 2")
+    mm.Expect(&dep_pkg2.MethodB, "real response 3")
+
+    ... // Your original code here. No change.
+}
+```
+4. After that, remove this line.
+```
+mm.SetLogger(mm.CapturingLogger)
+```
+
+Now you got a perfect unittest.
+
 
 ### Complete Demo
 
