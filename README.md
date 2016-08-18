@@ -109,13 +109,26 @@ Now you got a perfect unittest.
 ## How can I mock an object returned by the dependency pkg? (For refactoring scenarios)
 
 Methodman is modeled around modifiable method, so it won't natively work for this kind of mocking. When converting your implementation to allow Dependency Injection for such case, you would still need to,
+
 1. Abstractise the returned type into an interface, which allow using a mock implementation behind
+
 2. Probably you'll use codegen tool like [Testify Mock](https://github.com/stretchr/testify#mock-package) to generate the mock implementation in independent files
+
 3. By normal practice, you will need to change your main logic to receive dependency as extra param, to allow mocking in unittest.
 
 However, for Step 3, Methodman can make thing easier. You don't really need to change your logic function's signature to add an extra param for receiving dependency. You just need to monkey patch the function where you receive the object, either object constructor, or a singelton getter. Simply let it response with your mock object under the interface in Step 1 in your unittest, and that's all. No need to refactor main logic for mocking.
 
 What about mocking an exported channel without significant refactoring? I'm not sure yet. Please share with me if you got idea.
+
+## How methodman works?
+
+The processing model is simple.
+
+1. When registering the dependency method var, methodman will replace the var with a manager object. It wraps the original method with a queue layer in front (one queue for one method in one goroutine).
+
+2. When you push a fake response to a method, the response will enter the queue of current goroutine.
+
+3. When the method endpoint is called (actually the manager object is called), it will check the queue of current goroutine. If the queue is non-empty, the method will response the fake response by consuming the queue. When queue is empty, the original method is called to provide a real response.
 
 ## Complete Demo
 
