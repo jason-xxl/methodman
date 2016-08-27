@@ -1,5 +1,6 @@
 # methodman
-**methodman** is a Go mocking tool based on monkey-patching. 
+
+**methodman** is a Go mocking tool that focuses on minimal code foot print.
 
 ## Why introduce this tool?
 
