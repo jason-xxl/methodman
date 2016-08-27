@@ -11,6 +11,16 @@ As extra features,
 - supports mocking with a temporary func, which could be useful for simulating timeout, panic, mock with internal state (via closure), or any other kind of side-effects.
 - certain helper support to make conversion from integration-test to unit-test easiler. This could be useful in refactoring old code base. See the sections below.
 
+## How methodman works?
+
+The processing model is simple.
+
+1. When registering the dependency method var, methodman will replace the var with a manager object. It wraps the original method with a queue layer in front (one queue for one method in one goroutine).
+
+2. When you push a fake response to a method, the response will enter the queue of current goroutine.
+
+3. When the method endpoint is called (actually the manager object is called), it will check the queue of current goroutine. If the queue is non-empty, the method will response the fake response by consuming the queue. When queue is empty, the original method is called to provide a real response.
+
 ## How to enable monkey patching in Golang?
 
 In many dynamic languages it's easy to monkey patching object or methods. However, in Go, exported pkg method is not modifiable. So by default there's no formal way to monkey-patch. To get monkey patching works, pkg method have to be defined as an exported method variable to allow modify (in case you can control the code),
