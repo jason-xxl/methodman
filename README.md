@@ -131,16 +131,6 @@ However, for Step 3, Methodman can make thing easier. You don't really need to c
 
 What about mocking an exported channel without significant refactoring? I'm not sure yet. Please share with me if you got idea.
 
-## How methodman works?
-
-The processing model is simple.
-
-1. When registering the dependency method var, methodman will replace the var with a manager object. It wraps the original method with a queue layer in front (one queue for one method in one goroutine).
-
-2. When you push a fake response to a method, the response will enter the queue of current goroutine.
-
-3. When the method endpoint is called (actually the manager object is called), it will check the queue of current goroutine. If the queue is non-empty, the method will response the fake response by consuming the queue. When queue is empty, the original method is called to provide a real response.
-
 ## Complete Demo
 
 Please check out [GitHub Pages](https://github.com/jason-xxl/methodman/blob/master/expect_test.go)
