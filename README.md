@@ -122,7 +122,7 @@ Methodman is modeled around modifiable method, so it won't natively work for thi
 
 1. Abstractise the returned type into an interface, which allow using a mock implementation behind
 
-2. Probably you'll use codegen tool like [Testify Mock](https://github.com/stretchr/testify#mock-package) to generate the mock implementation in independent files
+2. Probably you'll use codegen tool like [Testify Mock](https://github.com/stretchr/testify#mock-package) [Mokery](https://github.com/vektra/mockery) to generate the mock implementation in independent files
 
 3. By normal practice, you will need to change your main logic to receive dependency as extra param, to allow mocking in unittest.
 
