@@ -38,11 +38,25 @@ Given the target method var is modifiable, methodman would replace TheMethodToBe
 
 ## How to use?
 
-##### 1. Install.
+Assuming in `my_pkg`, you have a method `MyFunc` that depends on `MethodA` in another pkg `dep_pkg`, like this,
+```
+package my_pkg
+
+...
+
+func MyFunc()(resp1, resp2 string){
+	resp1, resp2 = dep_pkg.MethodA()
+	return 
+}
+
+```
+Now I'd like to write some unittest for `MyFunc` with mocking its dependency `dep_pkg`.`MethodA`.
+
+##### 1. Make sure methodman is installed.
 ```
 go get -u github.com/jason-xxl/methodman
 ```
-##### 2. Register the method to be mocked with a valid name.
+##### 2. Register the method to be mocked (dep_pkg.MethodA) with a valid name.
 ```
 func TestMain(m *testing.M) {
 	flag.Parse()
@@ -59,7 +73,13 @@ func TestNormalUse(t *testing.T) {
 	mm.Expect(&dep_pkg.MethodA, "some fake response as 1st returned var", "some more, as 2nd retuened var")
 
 	// Then you can receive above 2 value in your code path.
-	ret1, ret 2 := dep_pkg.MethodA(1, "2")
+	// Inside MyFunc, "dep_pkg.MethodA" would be called, but since it's mocked, you will receive the fake response,
+	// instead of executing the real logic of dep_pkg.MethodA.
+	ret1, ret2 := MyFunc()
+	
+	if ret1 == "some fake response as 1st returned var" && ret2 == "some more, as 2nd retuened var" {
+		t.Log("awesome! I received the fake responses!")
+	}
 	
 	// 1. If all fake responses are consumed, the agent will fall back to original method.
 	// 2. It doesn't matter next call of dep_pkg.MethodA is at which level, above fake value would be 
