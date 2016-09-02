@@ -44,7 +44,7 @@ package my_pkg
 
 ...
 
-func MyFunc()(resp1, resp2 string){
+var MyFunc = func() (resp1, resp2 string){
 	resp1, resp2 = dep_pkg.MethodA()
 	return 
 }
