@@ -4,9 +4,13 @@
 
 ## Why introduce this tool?
 
-I find most of dependency injection approaches in Go require significant boiletplate codes to get it work. By default it will introdude code structure change (adding dep as extra param) and even logic change, which could potentially make the code much more complex than it should be. And it could be even more complex if the target lib is a 3rdparty libs that doesn't support mocking. So for these reasons I need a tool that can enable mocking with **minimal code change**, and wrote this tool. I like to keep my code as clean / simple / readable as possible.
+I find most of dependency injection approaches in Go require significant boiletplate codes to get it work. Remembering the time you extract your implementation into interface, use code-gen tools to generate mock type, and change your func signature to receive depenency by adding extra params? These changes are more complex than it should be, especially when you have a large codebase to work on. Sometimes, it could be even more complex when the target lib is a 3rdparty lib and it just doesn't support mocking. 
 
-As extra features, 
+All these problems lead me to rethink why and how we mock. When we follow the traditional way to create an extra interface to allow mocking, why not just reuse the method signature as the interface? If I can directly inject a certain method and force it to return what I want, why I need to create extra interface, and maintain extra mock types?
+
+So I found it's possible to build a tool that can enable **mocking on certain method** with **minimal code change**. I like to keep my code as clean / simple / readable as possible. And methodman is it. Comparing to most mocking solutions out there, methodman can mock whatever methods it can modify, with almost zero boilerplate code.
+
+As extra features, it
 
 - supports parallel unittest. Mocking in one goroutine is invisible in another goroutine.
 - supports mocking with a temporary func, which could be useful for simulating timeout, panic, mock with internal state (via closure), or any other kind of side-effects.
