@@ -139,7 +139,7 @@ func TestToBeConverted(t *testing.T) {
 mm.SetLogger(mm.CapturingLogger)
 ```
 
-Now you got a perfect unittest.
+Now you got a perfect unittest that fully detached from real backends.
 
 ## How can I mock an object returned by the dependency pkg? (For refactoring scenarios)
 
