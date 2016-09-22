@@ -20,7 +20,7 @@ As extra features, it
 
 The processing model is simple.
 
-1. When registering the dependency method var, methodman will replace the var with a manager object. It wraps the original method with a queue layer in front (one queue for one method in one goroutine).
+1. When registering the dependency method var, methodman will replace (monkey patch) the var with a manager object. It wraps the original method with a queue layer in front (one queue for one method in one goroutine).
 
 2. When you push a fake response to a method, the response will enter the queue of current goroutine.
 
