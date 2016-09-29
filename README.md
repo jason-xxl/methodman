@@ -1,6 +1,6 @@
 # methodman
 
-**methodman** is a Go mocking tool that Denpendency Injection with minimal code overhead.
+**methodman** is a Go mocking tool that provides Denpendency Injection with minimal code overhead.
 
 ## Why introduce this tool?
 
