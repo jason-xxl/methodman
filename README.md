@@ -1,14 +1,14 @@
 # methodman
 
-**methodman** is a Go mocking tool that focuses on minimal code foot print.
+**methodman** is a Go mocking tool that focuses on minimal code overhead for Denpendency Injection.
 
 ## Why introduce this tool?
 
 I find most of dependency injection approaches in Go require significant boiletplate codes to get it work. Remembering the time you extract your implementation into interface, use code-gen tools to generate mock type, and change your func signature to receive depenency by adding extra params? These changes are more complex than it should be, especially when you have a large codebase to work on. Sometimes, it could be even more complex when the target lib is a 3rdparty lib and it just doesn't support mocking. 
 
-All these problems lead me to rethink why and how we mock. When we follow the traditional way to create an extra interface to allow mocking, why not just reuse the method signature as the interface? If I can directly inject a certain method and force it to return what I want, why I need to create extra interface, and maintain extra mock types?
+All these problems lead me to rethink why and how we mock. When we follow the traditional way to create an extra interface to allow mocking, why not just reuse the method signature as the interface? If I can directly inject a certain method and force it to return what I want in next call, why I need to create extra interface, and maintain extra mock types?
 
-So I found it's possible to build a tool that can enable **mocking on certain method** with **minimal code change**. I like to keep my code as clean / simple / readable as possible. And methodman is it. Comparing to most mocking solutions out there, methodman can mock whatever methods it can modify, with almost zero boilerplate code.
+So I found it's possible to build a tool that enables **mocking on certain method** with **much less code overhead**. Basically it uses reflection to understand func signature of the dependency method, and dynamically inject a mock manager in between your caller code and the dependency method to handle all the mocking requirements. This approach will just require zero extra structure and zero boilet place code.
 
 As extra features, it
 
