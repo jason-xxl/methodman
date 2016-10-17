@@ -1,20 +1,14 @@
 # methodman
 
-**methodman** is a Go mocking tool that provides Denpendency Injection with minimal code overhead.
+**methodman** is a Go test tool that provides Denpendency Injection with minimal code overhead.
 
-## Why introduce this tool?
+## Supported Features
 
-I find most of dependency injection approaches in Go require significant boiletplate codes to get it work. Remembering the time you extract your implementation into interface, use code-gen tools to generate mock type, and change your func signature to receive depenency by adding extra params? These changes are more complex than it should be, especially when you have a large codebase to work on. Sometimes, it could be even more complex when the target lib is a 3rdparty lib and it just doesn't support mocking. 
-
-All these problems lead me to rethink why and how we mock. When we follow the traditional way to create an extra interface to allow mocking, why not just reuse the method signature as the interface? If I can directly inject a certain method and force it to return what I want in next call, why I need to create extra interface, and maintain extra mock types?
-
-So I found it's possible to build a tool that enables **mocking on certain method** with **much less code overhead**. Basically it uses reflection to understand func signature of the dependency method, and dynamically inject a mock manager in between your caller code and the dependency method to handle all the mocking requirements. This approach will just require zero extra structure and zero boilet place code.
-
-As extra features, it
-
-- supports parallel unittest. Mocking in one goroutine is invisible in another goroutine.
-- supports mocking with a temporary func, which could be useful for simulating timeout, panic, mock with internal state (via closure), or any other kind of side-effects.
-- certain helper support to make conversion from integration-test to unit-test easiler. This could be useful in refactoring old code base. See the sections below.
+- Stub-based dependency injection for test. It can hijack any method stub to produce fake response for test scenarios.
+- Optimised to minimise code overhead. So that the api of pkgs remain clean and won't be polluted for test requirement.
+- Supports parallel unittest. Mocking in one goroutine is invisible / isolated from any other goroutine.
+- Supports stub-injection with a temporary func, which could be useful for simulating timeout, panic, mock with internal state (via closure), or any other kind of side-effects.
+- Certain helper support to make conversion from integration-test to unit-test easier. See the sections below.
 
 ## How to use?
 
@@ -69,7 +63,7 @@ func TestNormalUse(t *testing.T) {
 
 ## How methodman works?
 
-The processing model is simple.
+The stub based approach is simple.
 
 1. When registering the dependency method var, methodman will replace (monkey patch) the var with a manager object. It wraps the original method with a queue layer in front (one queue for one method in one goroutine).
 
@@ -77,7 +71,7 @@ The processing model is simple.
 
 3. When the method endpoint is called (actually the manager object is called), it will check the queue of current goroutine. If the queue is non-empty, the method will response the fake response by consuming the queue. When queue is empty, the original method is called to provide a real response.
 
-## How to enable monkey patching in Golang?
+## How to enable monkey patching (stub injection) in Golang?
 
 In many dynamic languages it's easy to monkey patching object or methods. However, in Go, exported pkg method is not modifiable. So by default there's no formal way to monkey-patch. To get monkey patching works, pkg method have to be defined as an exported method variable to allow modify (in case you can control the code),
 ```
@@ -141,9 +135,11 @@ mm.SetLogger(mm.CapturingLogger)
 
 Now you got a perfect unittest that fully detached from real backends.
 
-## How can I mock an object returned by the dependency pkg? (For refactoring scenarios)
+## How can I fake an object returned by the dependency pkg? (For refactoring scenarios)
 
-Methodman is modeled around modifiable method, so it won't natively work for this kind of mocking. When converting your implementation to allow Dependency Injection for such case, you would still need to,
+Methodman is modeled around modifiable method stub, so it won't natively work for this kind of faking object.
+
+When converting your implementation to allow Dependency Injection for this case, you probably will,
 
 1. Abstractise the returned type into an interface, which allow using a mock implementation behind
 
@@ -151,7 +147,7 @@ Methodman is modeled around modifiable method, so it won't natively work for thi
 
 3. By normal practice, you will need to change your main logic to receive dependency as extra param, to allow mocking in unittest.
 
-However, for Step 3, Methodman can make thing easier. You don't really need to change your logic function's signature to add an extra param for receiving dependency. You just need to monkey patch the function where you receive the object, either object constructor, or a singelton getter. Simply let it response with your mock object under the interface in Step 1 in your unittest, and that's all. No need to refactor main logic for mocking.
+However, for Step 3, Methodman makes it easier. You can just patch the function where you receive the object, either object constructor, or a singelton getter. Simply hijack it to response with your mock object, and that's all. No need to refactor main logic for enable mocking.
 
 What about mocking an exported channel without significant refactoring? I'm not sure yet. Please share with me if you got idea.
 
