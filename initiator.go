@@ -8,7 +8,7 @@ import (
 
 var (
 	// defaultInitiator ...
-	defaultInitiator = &initiator{
+	defaultInitiator = &Initiator{
 		CleanUp: func() {
 			gls.Cleanup()
 		},
@@ -18,7 +18,7 @@ var (
 	queueKeyPrefixT = "_methodman_queue_132435_*testing.T"
 )
 
-type initiator struct {
+type Initiator struct {
 	// CleanUp will do clean up gls state for current goroutine
 	CleanUp func()
 }
@@ -26,7 +26,7 @@ type initiator struct {
 // Init store the current *testing.T for use
 // By default you can use it at beginning of your test like this way
 //     defer mm.Init(t).CleanUp()
-func Init(t *testing.T) *initiator {
+func Init(t *testing.T) *Initiator {
 	if t == nil {
 		panic("methodman.Init: t is nil")
 	}
