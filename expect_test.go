@@ -130,7 +130,7 @@ func TestNormalUse(t *testing.T) {
 
 	// Now let's go with multiple (10k) goroutines and each 3 fake resp
 	//
-	var wg sync.WaitGroup
+	wg := &sync.WaitGroup{}
 	for idx := 0; idx < 1000; idx++ {
 
 		wg.Add(1)
