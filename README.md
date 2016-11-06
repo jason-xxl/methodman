@@ -1,6 +1,6 @@
 # methodman
 
-**methodman** is a Go test tool that provides Denpendency Injection with minimal code overhead.
+**methodman** is a stub-based Denpendency Injection tool in Go.
 
 ## Supported Features
 
