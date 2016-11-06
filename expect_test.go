@@ -178,5 +178,5 @@ func TestNormalUse(t *testing.T) {
 	// from those on another. Now you can feel free to run a bunch of unrelated unittests
 	// in parallel mode with arbitrary mocking that won't disturb each other.
 	//
-	wg.Done()
+	wg.Wait()
 }
